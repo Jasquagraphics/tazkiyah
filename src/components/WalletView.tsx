@@ -383,7 +383,7 @@ export default function WalletView({ user, onUpdate }: WalletViewProps) {
                 (activeTab === 'all' 
                   ? [...history.map(h => ({...h, type: 'revenue'})), ...withdrawals.map(w => ({...w, type: 'withdrawal'}))] 
                   : withdrawals.map(w => ({...w, type: 'withdrawal'})))
-                  .sort((a, b) => new Date(b.created_at || b.date).getTime() - new Date(a.created_at || a.date).getTime())
+                  .sort((a: any, b: any) => new Date(b.created_at || b.date).getTime() - new Date(a.created_at || a.date).getTime())
                   .map((tx: any) => (
                     <tr key={tx.id + tx.type} className="hover:bg-white/5 transition-all group cursor-pointer" onClick={() => tx.type === 'withdrawal' && setSelectedWithdrawal(tx)}>
                       <td className="px-10 py-6">
