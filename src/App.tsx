@@ -110,11 +110,7 @@ export default function App() {
             </div>
             <div className="flex items-center gap-3 md:gap-6 shrink-0">
               <NotificationBell userId={user.id} />
-              <div className="h-10 w-10 rounded-2xl vibrant-gradient p-[1px] shadow-lg shadow-brand-primary/20">
-                <div className="w-full h-full rounded-[15px] bg-[#030014] flex items-center justify-center text-white text-sm font-black">
-                  {(user.name || 'U').charAt(0)}
-                </div>
-              </div>
+              <UserDropdown user={user} onLogout={handleLogout} />
             </div>
           </header>
 
@@ -217,6 +213,65 @@ function Sidebar({ user, onLogout }: { user: User; onLogout: () => void }) {
         </button>
       </div>
     </aside>
+  );
+}
+
+function UserDropdown({ user, onLogout }: { user: User, onLogout: () => void }) {
+  const [show, setShow] = useState(false);
+  const navigate = useNavigate();
+
+  return (
+    <div className="relative">
+      <button 
+        onClick={() => setShow(!show)}
+        className="h-10 w-10 rounded-2xl vibrant-gradient p-[1px] shadow-lg shadow-brand-primary/20 cursor-pointer active:scale-95 transition-transform"
+      >
+        <div className="w-full h-full rounded-[15px] bg-[#030014] flex items-center justify-center text-white text-sm font-black">
+          {(user.name || 'U').charAt(0)}
+        </div>
+      </button>
+
+      <AnimatePresence>
+        {show && (
+          <>
+            <div className="fixed inset-0 z-20" onClick={() => setShow(false)} />
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+              className="absolute right-0 mt-4 w-56 glass-card z-30 overflow-hidden"
+            >
+              <div className="p-4 border-b border-white/5">
+                <p className="text-sm font-black text-white truncate">{user.name || 'User'}</p>
+                <p className="text-[10px] text-white/40 uppercase tracking-widest mt-0.5">{user.role}</p>
+              </div>
+              <div className="p-2 space-y-1">
+                <button 
+                  onClick={() => {
+                    navigate('/settings');
+                    setShow(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-white/60 hover:text-white hover:bg-white/5 rounded-xl transition-all group"
+                >
+                  <Settings className="w-4 h-4 group-hover:text-brand-primary transition-colors" />
+                  <span className="text-xs font-bold">{user.role === 'admin' ? 'Settings' : 'Profile'}</span>
+                </button>
+                <button 
+                  onClick={() => {
+                    onLogout();
+                    setShow(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-white/60 hover:text-red-400 hover:bg-red-400/5 rounded-xl transition-all group"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span className="text-xs font-bold">Logout</span>
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 
