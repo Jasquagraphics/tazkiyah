@@ -22,5 +22,19 @@
     },
     "allowImportingTsExtensions": true,
     "noEmit": true
-  }
+  },
+  "include": [
+    "updated frontend/src/**/*.ts",
+    "updated frontend/src/**/*.tsx",
+    "vite.config.ts"
+  ],
+  "exclude": [
+    "android",
+    "dist",
+    "functions",
+    "new frontent ui",
+    "node_modules",
+    "src",
+    "uploads"
+  ]
 }

@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-brand-primary: var(--brand-primary, #8B5CF6);
+  --color-brand-secondary: var(--brand-secondary, #EC4899);
+  --color-brand-accent: var(--brand-accent, #06B6D4);
+
+  --color-text-primary: var(--text-primary, #ffffff);
+  --color-text-secondary: var(--text-secondary, rgba(255, 255, 255, 0.4));
+  --color-text-muted: var(--text-muted, rgba(255, 255, 255, 0.2));
+  --color-border-base: var(--border-color, rgba(255, 255, 255, 0.05));
+}
+
+@layer base {
+  html {
+    font-size: 14px;
+    color-scheme: light dark;
+  }
+
+  body {
+    background-color: var(--app-bg-color, #030014);
+    color: var(--text-primary, #ffffff);
+    @apply antialiased;
+    background-image: 
+      radial-gradient(circle at 0% 0%, var(--brand-primary-alpha, rgba(139, 92, 246, 0.15)) 0%, transparent 50%),
+      radial-gradient(circle at 100% 100%, var(--brand-secondary-alpha, rgba(236, 72, 153, 0.15)) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, var(--brand-accent-alpha, rgba(6, 182, 212, 0.05)) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  input, textarea, select {
+    background-color: var(--border-base, rgba(255, 255, 255, 0.05));
+    border: 1px solid var(--border-base, rgba(255, 255, 255, 0.1));
+    color: var(--text-primary, #ffffff);
+    @apply focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-all py-3 px-4 rounded-xl text-xs outline-none appearance-none;
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='rgba(128,128,128,0.5)' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.2em;
+    padding-right: 2.5rem;
+  }
+  
+  ::placeholder {
+    color: var(--text-muted, rgba(255, 255, 255, 0.3));
+  }
+}
+
+@layer components {
+  .glass-card {
+    background-color: var(--glass-card-bg, rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-card-border, rgba(255, 255, 255, 0.1));
+    border-radius: var(--border-radius, 2rem);
+    @apply shadow-2xl;
+  }
+  
+  .glass-nav {
+    background-color: var(--glass-card-bg, rgba(0, 0, 0, 0.4));
+    backdrop-filter: blur(24px);
+    border-top: 1px solid var(--border-base, rgba(255, 255, 255, 0.05));
+  }
+
+  .vibrant-gradient {
+    @apply bg-gradient-to-br from-brand-primary via-brand-secondary to-brand-accent text-white!;
+  }
+
+  .neon-glow {
+    @apply shadow-[0_0_20px_rgba(139,92,246,0.3)];
+  }
+}
+
+/* Light Mode Overrides */
+.light {
+  .text-white {
+    color: var(--text-primary) !important;
+  }
+  .text-white\/80 {
+    color: rgba(15, 23, 42, 0.8) !important;
+  }
+  .text-white\/60 {
+    color: rgba(15, 23, 42, 0.6) !important;
+  }
+  .text-white\/40 {
+    color: var(--text-secondary) !important;
+  }
+  .text-white\/30 {
+    color: rgba(15, 23, 42, 0.4) !important;
+  }
+  .text-white\/20 {
+    color: var(--text-muted) !important;
+  }
+  .text-white\/10 {
+    color: rgba(15, 23, 42, 0.1) !important;
+  }
+
+  .bg-white\/5 {
+    background-color: rgba(15, 23, 42, 0.05) !important;
+  }
+  .bg-white\/10 {
+    background-color: rgba(15, 23, 42, 0.1) !important;
+  }
+  .bg-white\/20 {
+    background-color: rgba(15, 23, 42, 0.2) !important;
+  }
+
+  .border-white\/5 {
+    border-color: rgba(15, 23, 42, 0.05) !important;
+  }
+  .border-white\/10 {
+    border-color: rgba(15, 23, 42, 0.1) !important;
+  }
+  .border-white\/20 {
+    border-color: rgba(15, 23, 42, 0.2) !important;
+  }
+
+  /* Ensure vibrant gradient text stays white */
+  .vibrant-gradient {
+    color: white !important;
+  }
+  
+  /* Sidebar and Header adjustments */
+  header, aside {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    border-color: rgba(0, 0, 0, 0.05) !important;
+  }
+}

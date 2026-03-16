@@ -5,7 +5,9 @@ import {defineConfig, loadEnv} from 'vite';
 
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
+  const frontendRoot = path.resolve(__dirname, 'updated frontend');
   return {
+    root: frontendRoot,
     plugins: [react(), tailwindcss()],
     define: {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
@@ -14,6 +16,11 @@ export default defineConfig(({mode}) => {
       alias: {
         '@': path.resolve(__dirname, '.'),
       },
+    },
+    publicDir: path.resolve(__dirname, 'public'),
+    build: {
+      outDir: path.resolve(__dirname, 'dist'),
+      emptyOutDir: true,
     },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
