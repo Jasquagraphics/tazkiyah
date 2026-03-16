@@ -5,6 +5,7 @@
     }
   ],
   "hosting": {
+    "site": "tazkiyanew",
     "public": "dist",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
