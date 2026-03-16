@@ -46,3 +46,15 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           projectId: ${{ secrets.FIREBASE_PROJECT_ID }}
           channelId: live
+
+      - name: Auth Google
+        if: github.event_name == 'push'
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+
+      - name: Deploy functions
+        if: github.event_name == 'push'
+        run: |
+          npm ci --prefix functions
+          npx firebase-tools deploy --only functions --project "${{ secrets.FIREBASE_PROJECT_ID }}" --non-interactive

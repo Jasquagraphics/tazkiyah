@@ -31,7 +31,16 @@ export default function Login({ onLogin }: LoginProps) {
   const handleGoogleLogin = async () => {
     try {
       const response = await fetch('/api/auth/google/url');
-      const { url } = await response.json();
+      const data = await response.json();
+      if (!response.ok) {
+        setError(data?.error || 'Failed to initiate Google login');
+        return;
+      }
+      const { url } = data || {};
+      if (!url) {
+        setError('Failed to initiate Google login');
+        return;
+      }
       window.open(url, 'google_oauth', 'width=600,height=700');
     } catch (error) {
       console.error('Google login error:', error);
